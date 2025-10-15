@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Luvium.co.za Lead Processing Script
+Luvium.co.za Lead Processing Flask API
 Processes registration leads from luvium.co.za portal
 """
-
 import os
 import json
 import smtplib
@@ -11,10 +10,15 @@ from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import logging
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+CORS(app)
 
 class LuviumLeadProcessor:
     """Process leads from luvium.co.za registration forms"""
@@ -172,51 +176,31 @@ class LuviumLeadProcessor:
         logger.info("Lead processing completed successfully")
         return {'success': True, 'message': 'Lead processed successfully'}
 
-def handler(event, context):
-    """AWS Lambda handler function"""
+@app.route('/process_luvium_leads', methods=['POST'])
+def process_leads():
+    """Flask API endpoint for processing leads"""
     try:
         processor = LuviumLeadProcessor()
         
-        # Parse request body
-        if isinstance(event.get('body'), str):
-            lead_data = json.loads(event['body'])
-        else:
-            lead_data = event.get('body', {})
+        # Get JSON data from request
+        lead_data = request.get_json()
+        
+        if not lead_data:
+            return jsonify({'success': False, 'message': 'No data provided'}), 400
         
         result = processor.process_lead(lead_data)
         
-        return {
-            'statusCode': 200 if result['success'] else 400,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS'
-            },
-            'body': json.dumps(result)
-        }
+        status_code = 200 if result['success'] else 400
+        return jsonify(result), status_code
+        
     except Exception as e:
-        logger.error(f"Handler error: {str(e)}")
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({'success': False, 'message': str(e)})
-        }
+        logger.error(f"API error: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.route('/', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({'status': 'ok', 'service': 'Luvium Lead Processing API'}), 200
 
 if __name__ == '__main__':
-    # Test the processor
-    test_lead = {
-        'name': 'Test User',
-        'email': 'test@example.com',
-        'phone': '+27 123 456 789',
-        'company': 'Test Company',
-        'investment_interest': 'Growth Portfolio',
-        'message': 'Interested in learning more about investment opportunities'
-    }
-    
-    processor = LuviumLeadProcessor()
-    result = processor.process_lead(test_lead)
-    print(json.dumps(result, indent=2))
+    app.run(host="0.0.0.0", port=8000)
