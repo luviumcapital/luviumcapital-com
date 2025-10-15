@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luvium - Registration | Investment Portal</title>
+    <meta name="description" content="Register for Luvium investment opportunities - Build wealth with South Africa's trusted investment platform">
+    <meta name="keywords" content="luvium, investment, south africa, registration, wealth management">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 40px 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+        }
+        
+        .checkbox-group label {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message,
+        .error-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .success-message.show,
+        .error-message.show {
+            display: block;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Luvium Investment Portal</h1>
+            <p>Your Journey to Financial Freedom Starts Here</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="success-message" id="successMessage">
+                Thank you for registering! Our investment team will contact you shortly.
+            </div>
+            <div class="error-message" id="errorMessage">
+                There was an error processing your registration. Please try again.
+            </div>
+            
+            <form id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="+27 XX XXX XXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company Name (Optional)</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="investmentInterest">Investment Interest <span class="required">*</span></label>
+                    <select id="investmentInterest" name="investmentInterest" required>
+                        <option value="">-- Select Investment Type --</option>
+                        <option value="growth">Growth Portfolio</option>
+                        <option value="income">Income Portfolio</option>
+                        <option value="balanced">Balanced Portfolio</option>
+                        <option value="retirement">Retirement Planning</option>
+                        <option value="tax_free">Tax-Free Savings</option>
+                        <option value="offshore">Offshore Investment</option>
+                        <option value="property">Property Investment</option>
+                        <option value="other">Other (Please specify in message)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="investmentAmount">Estimated Investment Amount (ZAR)</label>
+                    <select id="investmentAmount" name="investmentAmount">
+                        <option value="">-- Select Amount Range --</option>
+                        <option value="50k-100k">R50,000 - R100,000</option>
+                        <option value="100k-250k">R100,000 - R250,000</option>
+                        <option value="250k-500k">R250,000 - R500,000</option>
+                        <option value="500k-1m">R500,000 - R1,000,000</option>
+                        <option value="1m-5m">R1,000,000 - R5,000,000</option>
+                        <option value="5m+">R5,000,000+</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message / Additional Information</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your investment goals and any questions you may have..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="consent" name="consent" required>
+                        <label for="consent">
+                            I agree to be contacted by Luvium regarding investment opportunities and consent to the processing of my personal information in accordance with POPIA. <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter">
+                            Subscribe to receive investment insights and market updates
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Submit Registration
+                </button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Luvium | <a href="https://luvium.co.za">Visit our website</a> | <a href="mailto:info@luvium.co.za">Contact Us</a></p>
+            <p>Building Wealth Together</p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide messages
+            successMessage.classList.remove('show');
+            errorMessage.classList.remove('show');
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Collect form data
+            const formData = {
+                name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                company: document.getElementById('company').value,
+                investment_interest: document.getElementById('investmentInterest').value,
+                investment_amount: document.getElementById('investmentAmount').value,
+                message: document.getElementById('message').value,
+                newsletter: document.getElementById('newsletter').checked,
+                consent: document.getElementById('consent').checked,
+                timestamp: new Date().toISOString(),
+                source: 'luvium.co.za'
+            };
+            
+            try {
+                // Submit to backend API
+                const response = await fetch('/api/process_luvium_leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    successMessage.classList.add('show');
+                    document.getElementById('registrationForm').reset();
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    throw new Error(result.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.textContent = error.message || 'There was an error processing your registration. Please try again.';
+                errorMessage.classList.add('show');
+                
+                // Scroll to error message
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Registration';
+            }
+        });
+        
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.startsWith('27')) {
+                value = '+' + value;
+            } else if (value.startsWith('0')) {
+                value = '+27' + value.substring(1);
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
