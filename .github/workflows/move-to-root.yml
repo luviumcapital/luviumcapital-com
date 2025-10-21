@@ -17,9 +17,11 @@ jobs:
         run: |
           # Move all contents from luviumcapital.com directory to root
           if [ -d "luviumcapital.com" ]; then
+            # Use shopt to enable dotglob (include hidden files)
+            shopt -s dotglob
             mv luviumcapital.com/* .
-            mv luviumcapital.com/.[!.]* . 2>/dev/null || true
-            rmdir luviumcapital.com
+            # Remove the empty directory
+            rm -rf luviumcapital.com
           else
             echo "luviumcapital.com directory not found"
             exit 1
