@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Luvium Capital</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    #contact-form {
+      max-width: 540px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form id="contact-form" style="max-width:540px">
+    <h3>Contact Us</h3>
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Message</label>
+    <textarea name="message" required></textarea>
+
+    <button type="submit">Send Enquiry</button>
+    <div id="form-status" style="margin-top: 10px; color: #007bff;"></div>
+  </form>
+
+  <script>
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const status = document.getElementById('form-status');
+    status.textContent = 'Sending...';
+
+    // Gather user input
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    // Prepare payload for Brevo transactional email API
+    const payload = {
+      sender: { name: name, email: email },
+      to: [{ email: "admin@luviumcapital.com", name: "Luvium Capital" }],
+      subject: `New Investor Enquiry from ${name}`,
+      htmlContent: `<strong>Investor Enquiry</strong><br>Name: ${name}<br>Email: ${email}<br>Message: ${message}`
+    };
+
+    // Call Brevo API
+    await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': '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',
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(resp => {
+      if (resp.ok) {
+        status.textContent = "Thank you! Your enquiry was sent.";
+        form.reset();
+      } else {
+        status.textContent = "Error sending your message. Please try again.";
+      }
+    }).catch(() => {
+      status.textContent = "Network error. Please reload and try again.";
+    });
+  });
+  </script>
+</body>
+</html>
