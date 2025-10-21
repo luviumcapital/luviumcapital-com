@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd luviumcapital.com
-          pnpm install
+          pnpm install --no-frozen-lockfile
       
       - name: Build static site
         run: |
