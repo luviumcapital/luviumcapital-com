@@ -1,0 +1,37 @@
+name: Unzip and Deploy Static Site
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Unzip the static site
+        run: |
+          # Unzip the file
+          unzip luviumcapital.com-14.zip -d temp_extract
+          
+          # Remove old files (keep .github, CNAME, and the zip)
+          find . -maxdepth 1 ! -name '.' ! -name '..' ! -name '.git' ! -name '.github' ! -name 'CNAME' ! -name 'luviumcapital.com-14.zip' ! -name 'temp_extract' -exec rm -rf {} +
+          
+          # Move extracted contents to root
+          mv temp_extract/* .
+          
+          # Clean up
+          rmdir temp_extract
+          rm luviumcapital.com-14.zip
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Deploy static site from luviumcapital.com-14.zip"
+          git push
