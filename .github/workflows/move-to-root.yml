@@ -1,0 +1,34 @@
+name: Move Contents to Root
+
+on:
+  workflow_dispatch:
+
+jobs:
+  move:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Move contents to root
+        run: |
+          # Move all contents from luviumcapital.com directory to root
+          if [ -d "luviumcapital.com" ]; then
+            mv luviumcapital.com/* .
+            mv luviumcapital.com/.[!.]* . 2>/dev/null || true
+            rmdir luviumcapital.com
+          else
+            echo "luviumcapital.com directory not found"
+            exit 1
+          fi
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Move static site contents to root"
+          git push
