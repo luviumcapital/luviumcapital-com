@@ -26,7 +26,7 @@ jobs:
             shopt -s dotglob
             
             # Use rsync to merge/overwrite files
-            rsync -av luviumcapital.com/ .
+            rsync -av luviumcapital.c/om docs
             
             # Remove the now-empty subdirectory
             rm -rf luviumcapital.com
