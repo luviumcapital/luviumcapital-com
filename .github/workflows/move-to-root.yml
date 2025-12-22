@@ -17,14 +17,13 @@ jobs:
         run: |
           # Move all contents from luviumcapital.com directory to root
           if [ -d "luviumcapital.com" ]; then
-            # Use shopt to enable dotglob (include hidden files)
-rsync -a luviumcapital.com/ .
+            if [ -d "luviumcapital.com" ]; then
+            rsync -a luviumcapital.com/ .
             rm -rf luviumcapital.com
-          
+          else
             echo "luviumcapital.com directory not found"
             exit 1
           fi
-          
       - name: Commit and push changes
         run: |
           git config user.name "GitHub Actions"
