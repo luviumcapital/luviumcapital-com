@@ -18,11 +18,9 @@ jobs:
           # Move all contents from luviumcapital.com directory to root
           if [ -d "luviumcapital.com" ]; then
             # Use shopt to enable dotglob (include hidden files)
-            shopt -s dotglob
-            mv luviumcapital.com/* .
-            # Remove the empty directory
+rsync -a luviumcapital.com/ .
             rm -rf luviumcapital.com
-          else
+          
             echo "luviumcapital.com directory not found"
             exit 1
           fi
