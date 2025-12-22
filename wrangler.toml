@@ -1,7 +1,8 @@
 # Cloudflare Pages configuration
 
 [env.production]
+pages_build_output_dir = "dist"
 
 [env.production.build]
-build_command = "pnpm install --no-frozen-lockfile && npm run build && npm run export"
-destination_dir = "out"
+build_command = "pnpm install && npm run build"
+destination_dir = "dist"
