@@ -1,33 +1,52 @@
-name: Move Contents to Root
+name: Move Files to Root
 
 on:
   workflow_dispatch:
 
 jobs:
-  move:
+  move-files:
     runs-on: ubuntu-latest
+    
     permissions:
       contents: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Move contents to root
+        with:
+          fetch-depth: 0
+      
+      - name: Move files from subdirectory to root
         run: |
-          # Move all contents from luviumcapital.com directory to root
           if [ -d "luviumcapital.com" ]; then
-            if [ -d "luviumcapital.com" ]; then
-            rsync -a luviumcapital.com/ .
+            echo "Moving files from luviumcapital.com/ to root..."
+            
+            # Enable dotglob to include hidden files
+            shopt -s dotglob
+            
+            # Use rsync to merge/overwrite files
+            rsync -av luviumcapital.com/ .
+            
+            # Remove the now-empty subdirectory
             rm -rf luviumcapital.com
+            
+            echo "Files moved successfully"
           else
-            echo "luviumcapital.com directory not found"
+            echo "Error: luviumcapital.com directory not found"
             exit 1
           fi
+      
       - name: Commit and push changes
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Move static site contents to root"
-          git push
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add -A
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Move files from luviumcapital.com to root directory"
+            git push
+            echo "Changes committed and pushed successfully"
+          fi
