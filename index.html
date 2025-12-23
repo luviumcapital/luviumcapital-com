@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luvium Capital - Investment Opportunities</title>
+    <meta name="description" content="Luvium provides scalable floor plan finance solutions for underserved vehicle dealerships">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0A1F44',
+                        gold: '#D4AF37',
+                        lightgold: '#F5E6D3'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F5E6D3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(10, 31, 68, 0.15);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #0A1F44 0%, #1a3a6e 100%);
+        }
+        
+        .stat-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .mobile-menu {
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-navy to-blue-900 flex items-center justify-center">
+                            <span class="text-gold text-2xl font-bold">L</span>
+                        </div>
+                        <span class="text-2xl font-bold text-navy">Luvium Capital</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link active text-navy hover:text-gold font-medium">Home</a>
+                    <a href="#about" class="nav-link text-navy hover:text-gold font-medium">About Us</a>
+                    <a href="#solution" class="nav-link text-navy hover:text-gold font-medium">Solution</a>
+                    <a href="#impact" class="nav-link text-navy hover:text-gold font-medium">Impact & ESG</a>
+                    <a href="#risk" class="nav-link text-navy hover:text-gold font-medium">Risk</a>
+                    <a href="#dashboard" class="nav-link text-navy hover:text-gold font-medium">Dashboard</a>
+                    <a href="#contact" class="bg-gold text-navy px-6 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-navy">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden overflow-hidden max-h-0">
+                <div class="py-4 space-y-3">
+                    <a href="#home" class="block text-navy hover:text-gold font-medium py-2">Home</a>
+                    <a href="#about" class="block text-navy hover:text-gold font-medium py-2">About Us</a>
+                    <a href="#solution" class="block text-navy hover:text-gold font-medium py-2">Solution</a>
+                    <a href="#impact" class="block text-navy hover:text-gold font-medium py-2">Impact & ESG</a>
+                    <a href="#risk" class="block text-navy hover:text-gold font-medium py-2">Risk</a>
+                    <a href="#dashboard" class="block text-navy hover:text-gold font-medium py-2">Dashboard</a>
+                    <a href="#contact" class="block bg-gold text-navy px-6 py-2 rounded-lg font-semibold text-center">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient pt-32 pb-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Unlocking Capital for<br>
+                    <span class="gradient-text">Underserved Vehicle Dealerships</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto">
+                    Luvium provides a scalable floor plan finance solution for underserved vehicle dealerships in rural and underserved regions.
+                </p>
+                
+                <!-- Key Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
+                    <div class="stat-card rounded-2xl p-8 card-hover">
+                        <div class="text-4xl font-bold text-navy mb-2">~9.7%</div>
+                        <div class="text-gray-600 font-medium">Expected Returns</div>
+                    </div>
+                    <div class="stat-card rounded-2xl p-8 card-hover">
+                        <div class="text-4xl font-bold text-navy mb-2">57</div>
+                        <div class="text-gray-600 font-medium">Target Dealerships</div>
+                    </div>
+                    <div class="stat-card rounded-2xl p-8 card-hover">
+                        <div class="text-4xl font-bold text-navy mb-2">500+</div>
+                        <div class="text-gray-600 font-medium">Jobs Created</div>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#dashboard" class="bg-gold text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-600 transition">
+                        View Investment Documents
+                    </a>
+                    <a href="#solution" class="bg-white text-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Luvium -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-navy text-center mb-16">Why Choose Luvium</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover border border-gray-200">
+                    <div class="w-16 h-16 bg-gold rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Strong Financial Returns</h3>
+                    <p class="text-gray-600 leading-relaxed">Target returns of JIBAR + 3% with robust risk management and asset-backed security.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover border border-gray-200">
+                    <div class="w-16 h-16 bg-gold rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Financial Inclusion</h3>
+                    <p class="text-gray-600 leading-relaxed">Empowering underserved dealerships with access to capital they need to grow and thrive.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover border border-gray-200">
+                    <div class="w-16 h-16 bg-gold rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Market Opportunity</h3>
+                    <p class="text-gray-600 leading-relaxed">Tap into South Africa's R20 billion used vehicle market with significant growth potential.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover border border-gray-200">
+                    <div class="w-16 h-16 bg-gold rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Risk Mitigation</h3>
+                    <p class="text-gray-600 leading-relaxed">Comprehensive asset control, insurance coverage, and proven risk management frameworks.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover border border-gray-200">
+                    <div class="w-16 h-16 bg-gold rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">Economic Development</h3>
+                    <p class="text-gray-600 leading-relaxed">Creating 500+ jobs and driving economic growth in underserved communities across South Africa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-navy mb-6">About Luvium Capital</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Building bridges between capital and opportunity in South Africa's vehicle dealership sector.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="text-3xl font-bold text-navy mb-6">Our Story</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Luvium Capital was founded on the principle that every viable business deserves access to growth capital. We recognized a critical gap in the South African market: thousands of vehicle dealerships in rural and underserved areas unable to access the floor plan financing they need to thrive.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Our innovative approach combines institutional-grade risk management with a deep understanding of local market dynamics, enabling us to serve dealerships that traditional lenders overlook.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Today, we're proud to be driving financial inclusion while delivering attractive risk-adjusted returns to our investors.
+                    </p>
+                </div>
+                <div class="bg-navy rounded-2xl p-12 text-white">
+                    <h4 class="text-2xl font-bold mb-6">Our Mission</h4>
+                    <p class="text-gray-300 leading-relaxed mb-8">
+                        To democratize access to floor plan financing for underserved vehicle dealerships, creating sustainable economic opportunities and delivering consistent returns to our investors.
+                    </p>
+                    <h4 class="text-2xl font-bold mb-6">Our Vision</h4>
+                    <p class="text-gray-300 leading-relaxed">
+                        A South Africa where every legitimate vehicle dealer has access to the capital they need to grow their business and serve their communities.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 text-center card-hover">
+                    <div class="text-gold text-5xl font-bold mb-4">15+</div>
+                    <div class="text-navy font-semibold text-lg mb-2">Years Experience</div>
+                    <p class="text-gray-600">Combined industry expertise in finance and automotive sectors</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 text-center card-hover">
+                    <div class="text-gold text-5xl font-bold mb-4">R200M+</div>
+                    <div class="text-navy font-semibold text-lg mb-2">Capital Deployed</div>
+                    <p class="text-gray-600">Supporting growth across multiple dealerships</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 text-center card-hover">
+                    <div class="text-gold text-5xl font-bold mb-4">100%</div>
+                    <div class="text-navy font-semibold text-lg mb-2">Commitment</div>
+                    <p class="text-gray-600">To ethical investing and sustainable impact</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-navy mb-6">Our Solution</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">A comprehensive floor plan financing solution tailored for underserved vehicle dealerships</p>
+            </div>
+
+            <!-- Problem Statement -->
+            <div class="bg-navy rounded-2xl p-12 mb-16 text-white">
+                <h3 class="text-3xl font-bold mb-6">The Challenge</h3>
+                <p class="text-gray-300 leading-relaxed text-lg mb-6">
+                    South Africa's used vehicle market is valued at over R20 billion annually, yet thousands of legitimate dealerships in rural and underserved areas lack access to floor plan financing. Traditional lenders focus on established urban dealers, leaving a significant market segment without the capital needed to stock inventory and grow their businesses.
+                </p>
+                <p class="text-gray-300 leading-relaxed text-lg">
+                    This creates a lose-lose situation: dealerships cannot reach their potential, communities lack access to quality vehicles, and investors miss out on attractive risk-adjusted returns in an underserved market.
+                </p>
+            </div>
+
+            <!-- How It Works -->
+            <h3 class="text-3xl font-bold text-navy text-center mb-12">How It Works</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl font-bold text-navy">1</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-navy mb-4">Fund</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Luvium provides R3.5M in floor plan financing to qualified dealerships, enabling them to purchase and stock quality used vehicles.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl font-bold text-navy">2</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-navy mb-4">Grow</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Dealerships use the capital to expand their inventory, increase sales, and grow their businesses while serving their communities.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl font-bold text-navy">3</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-navy mb-4">Repay</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        As vehicles are sold, dealerships repay the financing with interest, generating consistent returns for investors.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Target Characteristics -->
+            <div class="bg-lightgold rounded-2xl p-12">
+                <h3 class="text-3xl font-bold text-navy mb-8 text-center">Target Dealership Characteristics</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Established track record (2+ years operating)</span>
+                    </div>
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Located in underserved or rural regions</span>
+                    </div>
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Minimum monthly sales of R500,000</span>
+                    </div>
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Strong community reputation and relationships</span>
+                    </div>
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Demonstrated financial management capabilities</span>
+                    </div>
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-gold mr-4 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-navy font-medium">Commitment to compliance and transparency</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact & ESG Section -->
+    <section id="impact" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-navy mb-6">Impact & ESG</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Investing with purpose - delivering returns while creating meaningful social impact</p>
+            </div>
+
+            <!-- PIC Alignment -->
+            <div class="bg-navy rounded-2xl p-12 mb-16 text-white">
+                <h3 class="text-3xl font-bold mb-6">Public Investment Corporation (PIC) Alignment</h3>
+                <p class="text-gray-300 leading-relaxed text-lg mb-6">
+                    Our investment thesis aligns closely with the PIC's mandate to promote economic development, job creation, and broad-based black economic empowerment (B-BBEE) in South Africa.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                        <h4 class="font-bold text-xl mb-3">Economic Development</h4>
+                        <p class="text-gray-300">Supporting growth in underserved regions and communities</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                        <h4 class="font-bold text-xl mb-3">Job Creation</h4>
+                        <p class="text-gray-300">Enabling 500+ sustainable employment opportunities</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                        <h4 class="font-bold text-xl mb-3">Financial Inclusion</h4>
+                        <p class="text-gray-300">Bridging the finance gap for underserved businesses</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Indicators -->
+            <h3 class="text-3xl font-bold text-navy text-center mb-12">Impact Indicators</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div class="bg-white rounded-xl p-8 text-center card-
