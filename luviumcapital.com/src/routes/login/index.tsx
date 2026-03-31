@@ -26,7 +26,7 @@ function Login() {
   const onSubmit = async (data: LoginForm) => {
     setLoading(true);
     try {
-      const res = await fetch("/trpc/login", {
+            const res = await fetch("/api/trpc/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ json: { email: data.email, password: data.password } }),
