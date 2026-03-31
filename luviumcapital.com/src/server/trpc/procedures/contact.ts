@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { baseProcedure } from "~/server/trpc/main";
-import { db } from "~/server/db";
+import { baseProcedure } from "../main";
+import { db } from "../../utils/db";
 
 export const submitContactForm = baseProcedure
   .input(
