@@ -2,8 +2,16 @@ import { createApp } from "vinxi";
 import reactRefresh from "@vitejs/plugin-react";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import { fileURLToPath } from "node:url";
 
 export default createApp({
+  vite: {
+    resolve: {
+      alias: {
+        "~": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
+  },
   routers: [
     {
       type: "static",
