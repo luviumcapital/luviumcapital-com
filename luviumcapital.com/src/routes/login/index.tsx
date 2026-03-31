@@ -1,10 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useState } from "react";
 import { Button } from "~/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/Card";
-import { LogIn, ArrowRight, Info } from "lucide-react";
+import { LogIn, ArrowRight, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 
 const loginSchema = z.object({
@@ -14,128 +15,89 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-export const Route = createFileRoute("/login/")({
-  component: Login,
-});
+export const Route = createFileRoute("/login/")({ component: Login });
 
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
-  });
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = (data: LoginForm) => {
-    toast.error("Authentication is not available in the static version. Please contact us directly to access investor materials.");
+  const onSubmit = async (data: LoginForm) => {
+    setLoading(true);
+    try {
+      const res = await fetch("/trpc/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ json: { email: data.email, password: data.password } }),
+      });
+      const result = await res.json();
+      if (result?.result?.data?.json?.token) {
+        localStorage.setItem("luvium_token", result.result.data.json.token);
+        localStorage.setItem("luvium_user", JSON.stringify(result.result.data.json.user));
+        toast.success("Welcome back!");
+        navigate({ to: "/dashboard" });
+      } else {
+        toast.error(result?.error?.message || "Invalid credentials. Please try again.");
+      }
+    } catch {
+      toast.error("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xl">C</span>
+    <div className="min-h-screen bg-gradient-to-br from-navy-900 via-primary-900 to-navy-800 flex items-center justify-center py-12 px-4">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-full mb-4">
+            <LogIn className="h-8 w-8 text-white" />
           </div>
+          <h1 className="text-3xl font-bold text-white">Investor Portal</h1>
+          <p className="text-primary-200 mt-2">Access exclusive investment documentation</p>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-bold text-navy-900">
-          Sign in to your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Access your investor dashboard and exclusive documents
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        {/* Info Banner */}
-        <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-start">
-            <Info className="h-5 w-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-            <div className="text-sm text-blue-800">
-              <p className="font-semibold mb-1">Static Site Notice</p>
-              <p>
-                This is a demonstration version. For access to investor materials and documentation, 
-                please <Link to="/contact" className="underline font-medium">contact us directly</Link>.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <Card>
+        <Card className="shadow-2xl">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <LogIn className="h-5 w-5" />
-              Investor Login
-            </CardTitle>
+            <CardTitle className="text-center text-navy-900">Sign In</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email address
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                 <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
                   {...register("email")}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  disabled
+                  type="email"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  placeholder="you@company.com"
                 />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                )}
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
               </div>
-
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="current-password"
-                  {...register("password")}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                  disabled
-                />
-                {errors.password && (
-                  <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-                )}
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div className="relative">
+                  <input
+                    {...register("password")}
+                    type={showPassword ? "text" : "password"}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 pr-10"
+                    placeholder="••••••••"
+                  />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
               </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled
-              >
-                Sign in (Demo Only)
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2">
+                {loading ? "Signing in..." : (<>Sign In <ArrowRight className="h-4 w-4" /></>)}
               </Button>
             </form>
-
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Need access?</span>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Link
-                  to="/contact"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700"
-                >
-                  Contact Us for Access
-                </Link>
-              </div>
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-600">Don't have access? <Link to="/register" className="text-primary-600 hover:underline font-medium">Request investor access</Link></p>
             </div>
           </CardContent>
         </Card>
+        <p className="text-center text-primary-200 text-sm mt-6">Luvium Capital Pty Ltd &bull; Confidential</p>
       </div>
     </div>
   );
