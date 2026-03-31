@@ -1,9 +1,9 @@
 import {
   createCallerFactory,
   createTRPCRouter,
-} from "~/server/trpc/main";
-import * as authProcedures from "~/server/trpc/procedures/auth";
-import * as contactProcedures from "~/server/trpc/procedures/contact";
+} from "./main";
+import * as authProcedures from "./procedures/auth";
+import * as contactProcedures from "./procedures/contact";
 
 export const appRouter = createTRPCRouter({
   // Auth procedures
