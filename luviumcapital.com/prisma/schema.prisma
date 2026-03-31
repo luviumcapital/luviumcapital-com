@@ -16,6 +16,8 @@ model User {
   password  String
   firstName String
   lastName  String
+  name      String?
+  role      String  @default("INVESTOR")
   company   String?
   phone     String?
   createdAt DateTime @default(now())
