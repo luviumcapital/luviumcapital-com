@@ -28,5 +28,17 @@ export default createApp({
         reactRefresh(),
       ],
     },
+        {
+      type: "http",
+      name: "server",
+      base: "/trpc",
+      handler: "./src/server/trpc/handler.ts",
+      target: "server",
+      plugins: () => [
+        tsConfigPaths({
+          projects: ["./tsconfig.json"],
+        }),
+      ],
+    },
   ],
 });
