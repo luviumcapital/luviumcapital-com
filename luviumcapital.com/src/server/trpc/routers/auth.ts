@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router, publicProcedure } from "../root";
-import { db } from "~/server/db";
+import { db } from "../../db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
