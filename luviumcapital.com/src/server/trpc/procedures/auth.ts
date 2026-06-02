@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { baseProcedure } from "../main";
 import { db } from "../../db";
-import { env } from "../../utils/env";
+import { env } from "../../env";
 
 export const register = baseProcedure
   .input(
