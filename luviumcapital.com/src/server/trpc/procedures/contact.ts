@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { baseProcedure } from "../main";
-import { db } from "../../utils/db";
+import { db } from "../../db";
 
 export const submitContactForm = baseProcedure
   .input(

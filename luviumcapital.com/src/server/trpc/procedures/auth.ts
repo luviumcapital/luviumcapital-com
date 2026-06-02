@@ -2,7 +2,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { baseProcedure } from "../main";
-import { db } from "../../utils/db";
+import { db } from "../../db";
 import { env } from "../../utils/env";
 
 export const register = baseProcedure
