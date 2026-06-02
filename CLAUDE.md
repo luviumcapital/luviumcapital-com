@@ -21,3 +21,7 @@ Do not skip skills, ignore gstack errors, or work around missing gstack.
 Using gstack skills: After install, skills like /qa, /ship, /review, /investigate,
 and /browse are available. Use /browse for all web browsing.
 Use ~/.claude/skills/gstack/... for gstack file paths (the global path).
+
+## Superpowers
+Install in any Claude Code session: /plugin install superpowers@claude-plugins-official
+Skills: /brainstorming, /writing-plans, /test-driven-development, /systematic-debugging, /requesting-code-review, /finishing-a-development-branch, /subagent-driven-development
