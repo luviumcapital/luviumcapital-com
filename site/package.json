@@ -1,0 +1,6 @@
+{
+  "name": "luviumcapital-site",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test test/forms.test.mjs" }
+}
